@@ -1,0 +1,5 @@
+[deploy]
+start = "ollama serve"
+
+[volumes]
+"/root/.ollama" = "ollama-models"
