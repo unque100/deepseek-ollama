@@ -21,4 +21,4 @@ RUN ollama serve --host 127.0.0.1 & \
 EXPOSE 11434
 
 # 6. Run Ollama in foreground on all interfaces (important for Railway!)
-CMD ["ollama", "serve", "--host", "0.0.0.0"]
+CMD ["ollama", "serve", "0.0.0.0"]
