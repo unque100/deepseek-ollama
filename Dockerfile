@@ -12,8 +12,13 @@ RUN apt-get update && apt-get install -y \
 # 3. Install Ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
-# 4. Expose port
+# 4. Pull model during build
+RUN ollama serve --host 127.0.0.1 & \
+    sleep 10 && \
+    ollama pull deepseek-coder || true
+
+# 5. Expose Ollama default port
 EXPOSE 11434
 
-# 5. Run Ollama server and pull deepseek-coder
-CMD bash -c "ollama serve & sleep 5 && ollama pull deepseek-coder && fg"
+# 6. Run Ollama in foreground on all interfaces (important for Railway!)
+CMD ["ollama", "serve", "--host", "0.0.0.0"]
