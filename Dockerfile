@@ -1,23 +1,11 @@
-# 1. Use Ubuntu base image
-FROM ubuntu:22.04
+# Use the official Ollama image (it includes the latest version and GPU/CPU support)
+FROM ollama/ollama:latest
 
-# 2. Install dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    gnupg \
-    ca-certificates \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists/*
+# Pull the DeepSeek model at image build (optional)
+RUN ollama pull deepseek-coder
 
-# 3. Install Ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
-
-# 4. Expose Ollama default port
+# Expose Ollama API port
 EXPOSE 11434
 
-# 5. Start Ollama server and pull model at container startup
-CMD bash -c "\
-    ollama serve --host 0.0.0.0 & \
-    sleep 10 && \
-    ollama pull deepseek-coder && \
-    wait"
+# Start Ollama server (no --host needed; it listens on 0.0.0.0 by default)
+CMD ["ollama", "serve"]
