@@ -1,11 +1,8 @@
-# Use the official Ollama base image
+# Use Ollama base image
 FROM ollama/ollama
 
-# Pull deepseek-coder model during build
-RUN ollama pull deepseek-coder
-
-# Expose Ollama's default port
+# Expose the Ollama server port
 EXPOSE 11434
 
-# Run Ollama server
-CMD ["ollama", "serve"]
+# Start the server and pull the model
+CMD bash -c "ollama serve & sleep 5 && ollama pull deepseek-coder && wait"
