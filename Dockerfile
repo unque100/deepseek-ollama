@@ -1,10 +1,10 @@
-# Use official Ollama image
-FROM ollama/ollama:latest
+# Use the official Ollama base image
+FROM ollama/ollama
 
-# Pull deepseek-coder model
+# Pull deepseek-coder model during build
 RUN ollama pull deepseek-coder
 
-# Expose Ollama default port
+# Expose Ollama's default port
 EXPOSE 11434
 
 # Run Ollama server
