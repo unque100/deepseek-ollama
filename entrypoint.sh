@@ -1,17 +1,16 @@
 #!/bin/bash
 
-# Start Ollama server in the background
+# Start server in background so model can be pulled
 ollama serve &
 
-# Wait for server to initialize
-echo "Waiting for Ollama server to be ready..."
-sleep 15
+# Wait for server to boot
+sleep 10
 
-# Pull the model (ensure Ollama is ready)
-ollama pull deepseek-coder
+# Pull tiny model that works on Railway CPU
+ollama pull tinyllama:1.1b-chat
 
-# Kill the background server process to restart clean
+# Stop background server
 pkill -f "ollama serve"
 
-# Start Ollama in foreground so container stays alive
+# Start server in foreground so Railway keeps container alive
 exec ollama serve
