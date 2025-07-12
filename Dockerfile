@@ -1,8 +1,12 @@
-# Use Ollama base image
+# Use the official Ollama image
 FROM ollama/ollama
 
-# Expose the default Ollama port
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Expose Ollama's default port
 EXPOSE 11434
 
-# Pull model and keep server running in foreground
-CMD bash -c "ollama serve & sleep 10 && ollama pull deepseek-coder && pkill -f 'ollama serve' && ollama serve"
+# Start from our script
+CMD ["/entrypoint.sh"]
