@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Start server in background so model can be pulled
-ollama serve &
+ollama serve --host 0.0.0.0 &
 
 # Wait for server to boot
-sleep 10
+sleep 20
 
-# Pull tiny model that works on Railway CPU
+# Pull model
 ollama pull tinyllama:1.1b-chat
 
 # Stop background server
 pkill -f "ollama serve"
 
-# Start server in foreground so Railway keeps container alive
-exec ollama serve
+# Start server in foreground to keep container alive and accessible
+exec ollama serve --host 0.0.0.0
