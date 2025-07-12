@@ -1,16 +1,17 @@
 #!/bin/bash
 
-# Start ollama server in background
+# Start Ollama server in the background
 ollama serve &
 
-# Wait for the server to be ready (10s is usually safe)
-sleep 10
+# Wait for server to initialize
+echo "Waiting for Ollama server to be ready..."
+sleep 15
 
-# Pull the model
+# Pull the model (ensure Ollama is ready)
 ollama pull deepseek-coder
 
-# Stop the background server
+# Kill the background server process to restart clean
 pkill -f "ollama serve"
 
-# Start the server in the foreground (container stays alive)
-ollama serve
+# Start Ollama in foreground so container stays alive
+exec ollama serve
